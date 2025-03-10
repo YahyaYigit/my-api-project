@@ -18,6 +18,15 @@ namespace Basketball.Entity.DTOs.User
         [Required]
         public string Password { get; set; }
 
+        public string? TcNo { get; set; }
+        public string? BirthPlace { get; set; }
+        public string? School { get; set; }
+        public string? Height { get; set; }
+        public string? Weight { get; set; }
+        public string? HealthProblem { get; set; }
+        public string? WhatsappGroup { get; set; }
+        public string? MotherWhatsappGroup { get; set; }
+        public string? FatherWhatsappGroup { get; set; }
 
         public DateTime BirthDay { get; set; }
 

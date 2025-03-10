@@ -12,6 +12,15 @@ namespace Basketball.Entity.DTOs.User
         public int DuesId { get; set; }
 
         public DateTime BirtDay { get; set; }
+        public string? TcNo { get; set; }
+        public string? BirthPlace { get; set; }
+        public string? School { get; set; }
+        public string? Height { get; set; }
+        public string? Weight { get; set; }
+        public string? HealthProblem { get; set; }
+        public string? WhatsappGroup { get; set; }
+        public string? MotherWhatsappGroup { get; set; }
+        public string? FatherWhatsappGroup { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public string? MotherName { get; set; }

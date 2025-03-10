@@ -51,7 +51,17 @@ namespace Basketball.WebAPI.Controllers
                     FatherName = user.FatherName,
                     FatherPhoneNumber = user.FatherPhoneNumber,
                     Email = user.Email,
-                    
+
+                    BirthPlace = user.BirthPlace,
+                    HealthProblem = user.HealthProblem,
+                    Height = user.Height,
+                    Weight = user.Weight,
+                    School = user.School,
+                    TcNo = user.TcNo,
+                    WhatsappGroup = user.WhatsappGroup,
+                    FatherWhatsappGroup = user.FatherWhatsappGroup,
+                    MotherWhatsappGroup = user.MotherWhatsappGroup,
+
                     // Dues kontrolü
                     MonthlyFees = user.Dues != null
                         ? new Dictionary<string, string>
@@ -116,6 +126,17 @@ namespace Basketball.WebAPI.Controllers
                     FatherName = user.FatherName ?? "Bilgi Yok", // FatherName nullsa "Bilgi Yok" göster
                     FatherPhoneNumber = user.FatherPhoneNumber ?? "Bilgi Yok", // FatherPhoneNumber nullsa "Bilgi Yok" göster
                     Email = user.Email,
+                   
+                    BirthPlace = user.BirthPlace,
+                    HealthProblem = user.HealthProblem,
+                    Height = user.Height,
+                    Weight = user.Weight,
+                    School = user.School,
+                    TcNo = user.TcNo,
+                    WhatsappGroup = user.WhatsappGroup,
+                    FatherWhatsappGroup = user.FatherWhatsappGroup,
+                    MotherWhatsappGroup = user.MotherWhatsappGroup,
+
 
                     // Dues kontrolü
                     MonthlyFees = user.Dues != null
@@ -166,6 +187,17 @@ namespace Basketball.WebAPI.Controllers
                 FatherName = user.FatherName ?? "Bilgi Yok", // FatherName nullsa "Bilgi Yok" göster
                 FatherPhoneNumber = user.FatherPhoneNumber ?? "Bilgi Yok", // FatherPhoneNumber nullsa "Bilgi Yok" göster
                 Email = user.Email,
+
+                BirthPlace = user.BirthPlace,
+                HealthProblem = user.HealthProblem,
+                Height = user.Height,
+                Weight = user.Weight,
+                School = user.School,
+                TcNo = user.TcNo,
+                WhatsappGroup = user.WhatsappGroup,
+                FatherWhatsappGroup = user.FatherWhatsappGroup,
+                MotherWhatsappGroup = user.MotherWhatsappGroup,
+
 
                 // Dues kontrolü
                 MonthlyFees = user.Dues != null

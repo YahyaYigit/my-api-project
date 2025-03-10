@@ -50,13 +50,20 @@ namespace footballAcademy
             builder.Services.AddDbContext<SampleDBContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            // Add services to the container.
-            builder.Services.AddControllers();
-
-            // Aþaðýdaki satýr, JSON serileþtirme sýrasýnda döngüsel referans hatasýný önlemek için eklendi.
-            builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+            // JSON serileþtirme ayarlarý ve döngüsel referans hatasýný önleme
+            builder.Services.AddControllers().AddJsonOptions(options =>
             {
-                options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+
+            // CORS Ayarlarý
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    policy => policy.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
             });
 
             // Swagger yapýlandýrmasý
@@ -73,6 +80,9 @@ namespace footballAcademy
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
+
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -1,6 +1,7 @@
 ﻿using Basketball.Entity.DTOs.User;
 using Basketball.Entity.Models;
 using Football.DataAcces.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,8 +15,6 @@ namespace Basketball.Service.Services.ServiceUser
         {
             _context = context;
         }
-
-       
 
 
         public void DeleteUser(int id)
@@ -90,8 +89,40 @@ namespace Basketball.Service.Services.ServiceUser
             existingUser.MotherPhoneNumber = userForUpdate.MotherPhoneNumber;
             existingUser.FatherName = userForUpdate.FatherName;
             existingUser.FatherPhoneNumber = userForUpdate.FatherPhoneNumber;
-          
+
+            existingUser.BirthPlace = userForUpdate.BirthPlace;
+            existingUser.HealthProblem = userForUpdate.HealthProblem;
+            existingUser.Height = userForUpdate.Height;
+            existingUser.Weight = userForUpdate.Weight;
+            existingUser.School = userForUpdate.School;
+            existingUser.TcNo = userForUpdate.TcNo;
+            existingUser.WhatsappGroup = userForUpdate.WhatsappGroup;
+            existingUser.FatherWhatsappGroup = userForUpdate.FatherWhatsappGroup;
+            existingUser.MotherWhatsappGroup = userForUpdate.MotherWhatsappGroup;
+
+
+            
+
+
+
+            // Email ve UserName'ı güncelle
             existingUser.Email = userForUpdate.Email;
+            existingUser.UserName = userForUpdate.Email;  // UserName'ı Email olarak güncelledik
+
+            // Eğer Email değiştiyse, SecurityStamp'i güncelle ve NormalizedEmail'i güncelle
+            if (existingUser.Email != userForUpdate.Email)
+            {
+                existingUser.SecurityStamp = Guid.NewGuid().ToString();  // Yeni bir SecurityStamp oluştur
+                existingUser.NormalizedEmail = userForUpdate.Email!.ToUpper(); // NormalizedEmail'i güncelle
+                existingUser.NormalizedUserName = userForUpdate.Email.ToUpper(); // NormalizedUserName'i güncelle
+            }
+            else
+            {
+                // Email değişmediği durumda da, NormalizedEmail ve NormalizedUserName güncellenmeli
+                existingUser.NormalizedEmail = userForUpdate.Email!.ToUpper();
+                existingUser.NormalizedUserName = userForUpdate.Email.ToUpper();
+            }
+
             existingUser.DuesId = userForUpdate.DuesId;
             existingUser.IsDeleted = userForUpdate.IsDeleted;
 
@@ -102,10 +133,23 @@ namespace Basketball.Service.Services.ServiceUser
                 throw new ArgumentException("Geçersiz CategoryGroupsId.");
             }
 
-            _context.SaveChanges();
+            // Şifre güncellemesi (eğer yeni şifre sağlanmışsa)
+            if (!string.IsNullOrEmpty(userForUpdate.Password))
+            {
+                var passwordHasher = new PasswordHasher<User>();
+                existingUser.PasswordHash = passwordHasher.HashPassword(existingUser, userForUpdate.Password);
+                existingUser.SecurityStamp = Guid.NewGuid().ToString();  // Yeni bir SecurityStamp oluştur
+            }
+
+            _context.SaveChanges();  // Değişiklikleri kaydet
 
             return existingUser;
         }
+
+
+
+
+
 
     }
 }

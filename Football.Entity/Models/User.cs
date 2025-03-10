@@ -7,10 +7,6 @@ namespace Basketball.Entity.Models
 {
     public class User : IdentityUser<int>
     { 
-
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-
         [ForeignKey("CategoryGroups")]
         public int? CategoryGroupsId { get; set; } // Nullable olmalı!
         [InverseProperty("Users")]
@@ -24,6 +20,10 @@ namespace Basketball.Entity.Models
         // Her bir kullanıcı, birden fazla Attendance kaydına sahip olabilir.
         public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
 
+
+
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public DateTime BirtDay { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
@@ -31,6 +31,15 @@ namespace Basketball.Entity.Models
         public string? MotherPhoneNumber { get; set; }
         public string? FatherName { get; set; }
         public string? FatherPhoneNumber { get; set; }
+        public string? TcNo { get; set; }
+        public string? BirthPlace { get; set; }
+        public string? School { get; set; }
+        public string? Height { get; set; }
+        public string? Weight { get; set; }
+        public string? HealthProblem { get; set; }
+        public string? WhatsappGroup { get; set; }
+        public string? MotherWhatsappGroup { get; set; }
+        public string? FatherWhatsappGroup { get; set; }
 
 
         public ICollection<Role>Roles { get; set; } =new List<Role>();

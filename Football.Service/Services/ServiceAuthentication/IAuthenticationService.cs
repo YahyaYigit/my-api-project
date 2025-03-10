@@ -1,5 +1,4 @@
-﻿
-using Basketball.Entity.DTOs.User;
+﻿using Basketball.Entity.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace Basketball.Service.Services.ServiceAuthentication

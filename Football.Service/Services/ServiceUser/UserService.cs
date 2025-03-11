@@ -96,9 +96,9 @@ namespace Basketball.Service.Services.ServiceUser
             existingUser.Weight = userForUpdate.Weight;
             existingUser.School = userForUpdate.School;
             existingUser.TcNo = userForUpdate.TcNo;
-            existingUser.WhatsappGroup = userForUpdate.WhatsappGroup;
-            existingUser.FatherWhatsappGroup = userForUpdate.FatherWhatsappGroup;
-            existingUser.MotherWhatsappGroup = userForUpdate.MotherWhatsappGroup;
+            existingUser.IsAcceptedWhatsappGroup = userForUpdate.IsAcceptedWhatsappGroup;
+            existingUser.IsAcceptedFatherWhatsappGroup = userForUpdate.IsAcceptedFatherWhatsappGroup;
+            existingUser.IsAcceptedMotherWhatsappGroup = userForUpdate.IsAcceptedMotherWhatsappGroup;
 
 
             

@@ -19,12 +19,9 @@ namespace Basketball.Service.Services.ServiceAuthentication
 
         }
 
-
-        public async Task<IdentityResult> RegisterUser(UserRegisterDTO userRegisterDTO)
+        public async Task<UserDTO> RegisterUser(UserRegisterDTO userRegisterDTO)
         {
-            // E-posta, kayıtta kullanıcı tarafından girilen haliyle küçük harfe çevrilsin
             var emailLower = userRegisterDTO.Email!.ToLower();
-            // Normalize işlemi _UserManager_ tarafından yapılır (genellikle ToUpperInvariant döner)
             var normalizedEmail = _userManager.NormalizeEmail(userRegisterDTO.Email);
             var normalizedUserName = _userManager.NormalizeName(userRegisterDTO.Email);
 
@@ -32,7 +29,7 @@ namespace Basketball.Service.Services.ServiceAuthentication
             {
                 FirstName = userRegisterDTO.FirstName,
                 LastName = userRegisterDTO.LastName,
-                UserName = emailLower, // küçük harfli
+                UserName = emailLower,
                 Email = emailLower,
                 BirtDay = userRegisterDTO.BirthDay,
                 Address = userRegisterDTO.Address,
@@ -41,25 +38,25 @@ namespace Basketball.Service.Services.ServiceAuthentication
                 MotherPhoneNumber = userRegisterDTO.MotherPhoneNumber,
                 FatherName = userRegisterDTO.FatherName,
                 FatherPhoneNumber = userRegisterDTO.FatherPhoneNumber,
-
                 BirthPlace = userRegisterDTO.BirthPlace,
                 HealthProblem = userRegisterDTO.HealthProblem,
                 Height = userRegisterDTO.Height,
                 Weight = userRegisterDTO.Weight,
                 School = userRegisterDTO.School,
                 TcNo = userRegisterDTO.TcNo,
-                WhatsappGroup = userRegisterDTO.WhatsappGroup,
-                FatherWhatsappGroup = userRegisterDTO.FatherWhatsappGroup,
-                MotherWhatsappGroup = userRegisterDTO.MotherWhatsappGroup,
-
+                IsAcceptedWhatsappGroup = userRegisterDTO.IsAcceptedWhatsappGroup,
+                IsAcceptedFatherWhatsappGroup = userRegisterDTO.IsAcceptedFatherWhatsappGroup,
+                IsAcceptedMotherWhatsappGroup = userRegisterDTO.IsAcceptedMotherWhatsappGroup,
                 NormalizedEmail = normalizedEmail,
                 NormalizedUserName = normalizedUserName
             };
 
+            // Kullanıcıyı oluştur
             var result = await _userManager.CreateAsync(user, userRegisterDTO.Password!);
             if (!result.Succeeded)
             {
-                return IdentityResult.Failed(result.Errors.ToArray());
+                // Hata durumunda null döndürebiliriz
+                return null;
             }
 
             // Varsayılan "User" rolünü ekle
@@ -71,19 +68,51 @@ namespace Basketball.Service.Services.ServiceAuthentication
                 var roleResult = await _roleManager.CreateAsync(role);
                 if (!roleResult.Succeeded)
                 {
-                    return IdentityResult.Failed(roleResult.Errors.ToArray());
+                    // Hata durumunda null döndürebiliriz
+                    return null;
                 }
             }
 
             var roleAddResult = await _userManager.AddToRoleAsync(user, roleName);
             if (!roleAddResult.Succeeded)
             {
-                return IdentityResult.Failed(roleAddResult.Errors.ToArray());
+                // Hata durumunda null döndürebiliriz
+                return null;
             }
 
             await _context.SaveChangesAsync();
-            return IdentityResult.Success;
+
+            // Kullanıcı başarıyla kaydedildiğinde UserDTO döndür
+            var userDTO = new UserDTO
+            {
+                Id = user.Id, // ID dahil et
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                BirtDay = user.BirtDay,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                MotherName = user.MotherName,
+                MotherPhoneNumber = user.MotherPhoneNumber,
+                FatherName = user.FatherName,
+                FatherPhoneNumber = user.FatherPhoneNumber,
+                BirthPlace = user.BirthPlace,
+                HealthProblem = user.HealthProblem,
+                Height = user.Height,
+                Weight = user.Weight,
+                School = user.School,
+                TcNo = user.TcNo,
+                IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
+                IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
+                IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup
+            };
+
+            return userDTO; // Kullanıcı başarıyla kaydedildi, UserDTO döndürülüyor
         }
+
+
+
+
 
 
 

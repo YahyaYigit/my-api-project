@@ -6,6 +6,7 @@ namespace Basketball.Entity.DTOs.User
 {
     public class UserRegisterDTO
     {
+
         [Required]
         public string FirstName { get; set; } 
 
@@ -24,9 +25,9 @@ namespace Basketball.Entity.DTOs.User
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? HealthProblem { get; set; }
-        public string? WhatsappGroup { get; set; }
-        public string? MotherWhatsappGroup { get; set; }
-        public string? FatherWhatsappGroup { get; set; }
+        public bool IsAcceptedWhatsappGroup { get; set; }
+        public bool IsAcceptedMotherWhatsappGroup { get; set; }
+        public bool IsAcceptedFatherWhatsappGroup { get; set; }
 
         public DateTime BirthDay { get; set; }
 

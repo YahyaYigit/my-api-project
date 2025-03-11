@@ -5,7 +5,7 @@ namespace Basketball.Service.Services.ServiceAuthentication
 {
     public interface IAuthenticationService
     {
-        Task<IdentityResult> RegisterUser(UserRegisterDTO userRegisterDTO);
+        Task<UserDTO> RegisterUser(UserRegisterDTO userRegisterDTO);
         Task<IdentityResult> LoginUser(UserLoginDTO userLoginDTO);
     }
 }

@@ -21,25 +21,24 @@ namespace Basketball.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState); // Model validasyonu başarısızsa hata döner
             }
 
-            // Kullanıcı kaydını gerçekleştir
-            var result = await _authenticationService.RegisterUser(userRegisterDTO);
+            // Kullanıcı kaydını yap ve UserDTO döndür
+            var userDTO = await _authenticationService.RegisterUser(userRegisterDTO);
 
-
-           
-
-            if (result.Succeeded)
+            if (userDTO == null)
             {
-                return Ok(new { Message = "Kullanıcı başarıyla kaydedildi." });
+                // Kullanıcı oluşturulamadıysa hata mesajı döndür
+                return BadRequest(new { Message = "Kullanıcı kaydı sırasında bir hata oluştu." });
             }
-            else
-            {
-                // Hata mesajlarını dön
-                return BadRequest(new { Errors = result.Errors.Select(e => e.Description) });
-            }
+
+            // Başarı mesajı ve UserDTO ile dönüş
+            return Ok(new { Message = "Kullanıcı başarıyla kaydedildi.", User = userDTO });
         }
+
+
+
 
 
         // Login işlemi için POST metodu

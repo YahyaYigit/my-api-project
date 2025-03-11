@@ -58,9 +58,9 @@ namespace Basketball.WebAPI.Controllers
                     Weight = user.Weight,
                     School = user.School,
                     TcNo = user.TcNo,
-                    WhatsappGroup = user.WhatsappGroup,
-                    FatherWhatsappGroup = user.FatherWhatsappGroup,
-                    MotherWhatsappGroup = user.MotherWhatsappGroup,
+                    IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
+                    IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
+                    IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
 
                     // Dues kontrolü
                     MonthlyFees = user.Dues != null
@@ -80,11 +80,6 @@ namespace Basketball.WebAPI.Controllers
                 Data = paginatedUsers
             });
         }
-
-
-
-
-
         // GET: api/User/deleted
         [HttpGet("getAllDeleted")]
         public IActionResult GetDeletedUsers(int page = 1, int pageSize = 10)
@@ -133,9 +128,9 @@ namespace Basketball.WebAPI.Controllers
                     Weight = user.Weight,
                     School = user.School,
                     TcNo = user.TcNo,
-                    WhatsappGroup = user.WhatsappGroup,
-                    FatherWhatsappGroup = user.FatherWhatsappGroup,
-                    MotherWhatsappGroup = user.MotherWhatsappGroup,
+                    IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
+                    IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
+                    IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
 
 
                     // Dues kontrolü
@@ -157,10 +152,6 @@ namespace Basketball.WebAPI.Controllers
                 Data = paginatedUsers
             });
         }
-
-
-
-
         // Tekil kullanıcıyı döndüren metod
         [HttpGet("[action]")]
         public IActionResult GetUser(int id)
@@ -194,9 +185,9 @@ namespace Basketball.WebAPI.Controllers
                 Weight = user.Weight,
                 School = user.School,
                 TcNo = user.TcNo,
-                WhatsappGroup = user.WhatsappGroup,
-                FatherWhatsappGroup = user.FatherWhatsappGroup,
-                MotherWhatsappGroup = user.MotherWhatsappGroup,
+                IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
+                IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
+                IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
 
 
                 // Dues kontrolü
@@ -210,10 +201,6 @@ namespace Basketball.WebAPI.Controllers
 
             return Ok(userDTO); // Tek bir UserDTO döndür
         }
-
-
-
-
         // PUT: api/Film/{id}
         [HttpPut("[action]")]
         public ActionResult UpdateUser([FromBody] UserForUpdate userForUpdate)

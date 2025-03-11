@@ -21,7 +21,7 @@ namespace Basketball.Entity.Models
         public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
 
 
-
+        public bool IsAdmin { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime BirtDay { get; set; }
@@ -37,9 +37,9 @@ namespace Basketball.Entity.Models
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? HealthProblem { get; set; }
-        public string? WhatsappGroup { get; set; }
-        public string? MotherWhatsappGroup { get; set; }
-        public string? FatherWhatsappGroup { get; set; }
+        public bool IsAcceptedWhatsappGroup { get; set; }
+        public bool IsAcceptedMotherWhatsappGroup { get; set; }
+        public bool IsAcceptedFatherWhatsappGroup { get; set; }
 
 
         public ICollection<Role>Roles { get; set; } =new List<Role>();

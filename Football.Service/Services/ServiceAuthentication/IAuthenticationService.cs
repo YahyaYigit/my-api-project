@@ -1,11 +1,12 @@
-﻿using Basketball.Entity.DTOs.User;
-using Microsoft.AspNetCore.Identity;
+﻿using Basketball.Entity.DTOs.LoginDTO;
+using Basketball.Entity.DTOs.User;
+
 
 namespace Basketball.Service.Services.ServiceAuthentication
 {
     public interface IAuthenticationService
     {
         Task<UserDTO> RegisterUser(UserRegisterDTO userRegisterDTO);
-        Task<IdentityResult> LoginUser(UserLoginDTO userLoginDTO);
+        Task<LoginDTO> LoginUser(UserLoginDTO userLoginDTO);
     }
 }

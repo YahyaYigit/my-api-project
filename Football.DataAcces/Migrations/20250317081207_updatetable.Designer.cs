@@ -4,6 +4,7 @@ using Football.DataAcces.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Basketball.DataAcces.Migrations
 {
     [DbContext(typeof(SampleDBContext))]
-    partial class SampleDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250317081207_updatetable")]
+    partial class updatetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,12 +124,17 @@ namespace Basketball.DataAcces.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -148,10 +156,7 @@ namespace Basketball.DataAcces.Migrations
                     b.Property<string>("TrainingDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("TrainingFinishTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("TrainingStartTime")
+                    b.Property<TimeSpan>("TrainingTime")
                         .HasColumnType("time");
 
                     b.HasKey("Id");
@@ -416,6 +421,13 @@ namespace Basketball.DataAcces.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("Basketball.Entity.Models.Role", b =>
+                {
+                    b.HasOne("Basketball.Entity.Models.User", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Basketball.Entity.Models.TrainingHours", b =>
                 {
                     b.HasOne("Basketball.Entity.Models.CategoryGroups", "CategoryGroup")
@@ -508,6 +520,8 @@ namespace Basketball.DataAcces.Migrations
             modelBuilder.Entity("Basketball.Entity.Models.User", b =>
                 {
                     b.Navigation("Attendances");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

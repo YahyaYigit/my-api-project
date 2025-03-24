@@ -79,6 +79,7 @@ namespace Basketball.Service.Services.ServiceUser
             }
 
             // Güncelleme işlemi
+       
             existingUser.FirstName = userForUpdate.FirstName;
             existingUser.LastName = userForUpdate.LastName;
             existingUser.CategoryGroupsId = userForUpdate.CategoryGroupsId;
@@ -99,9 +100,11 @@ namespace Basketball.Service.Services.ServiceUser
             existingUser.IsAcceptedWhatsappGroup = userForUpdate.IsAcceptedWhatsappGroup;
             existingUser.IsAcceptedFatherWhatsappGroup = userForUpdate.IsAcceptedFatherWhatsappGroup;
             existingUser.IsAcceptedMotherWhatsappGroup = userForUpdate.IsAcceptedMotherWhatsappGroup;
+            existingUser.AcceptedKVKK = userForUpdate.AcceptedKVKK;
+            existingUser.AcceptedImportant = userForUpdate.AcceptedImportant;
 
 
-            
+
 
 
 
@@ -132,6 +135,8 @@ namespace Basketball.Service.Services.ServiceUser
             {
                 throw new ArgumentException("Geçersiz CategoryGroupsId.");
             }
+
+
 
             // Şifre güncellemesi (eğer yeni şifre sağlanmışsa)
             if (!string.IsNullOrEmpty(userForUpdate.Password))

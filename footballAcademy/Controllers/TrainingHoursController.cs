@@ -45,7 +45,8 @@ namespace Basketball.WebAPI.Controllers
 
                   Id = training.Id,
                   TrainingDate = training.TrainingDate,
-                  TrainingTime = training.TrainingTime,
+                  TrainingStartTime = training.TrainingStartTime,
+                  TrainingFinishTime = training.TrainingFinishTime,
                   CategoryGroupsId = training.CategoryGroupsId,
                   CategoryGroupName = training.CategoryGroup!.Age, // Burada CategoryGroup'un Age özelliğini alıyoruz
 
@@ -80,7 +81,8 @@ namespace Basketball.WebAPI.Controllers
             {
                 Id = trainingHours.Id,
                 TrainingDate = trainingHours.TrainingDate,
-                TrainingTime = trainingHours.TrainingTime,
+                TrainingStartTime = trainingHours.TrainingStartTime,
+                TrainingFinishTime = trainingHours.TrainingFinishTime,
                 CategoryGroupsId = trainingHours.CategoryGroupsId,
                 CategoryGroupName = trainingHours.CategoryGroup!.Age,
 
@@ -106,7 +108,8 @@ namespace Basketball.WebAPI.Controllers
             {
                 Id = trainingHours.Id,
                 TrainingDate = trainingHours.TrainingDate,
-                TrainingTime = trainingHours.TrainingTime,
+                TrainingStartTime = trainingHours.TrainingStartTime,
+                TrainingFinishTime = trainingHours.TrainingFinishTime,
                 CategoryGroupsId = trainingHours.CategoryGroupsId,
                 CategoryGroupName = trainingHours.CategoryGroup?.Age ?? "Bilinmiyor", // Null kontrolü yapıldı
 

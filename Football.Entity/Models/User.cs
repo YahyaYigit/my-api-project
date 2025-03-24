@@ -41,8 +41,10 @@ namespace Basketball.Entity.Models
         public bool IsAcceptedMotherWhatsappGroup { get; set; }
         public bool IsAcceptedFatherWhatsappGroup { get; set; }
 
+        public bool AcceptedKVKK { get; set; }
+        public bool AcceptedImportant { get; set; }
 
-        public ICollection<Role>Roles { get; set; } =new List<Role>();
+        
 
         public bool IsDeleted { get; set; }
     }

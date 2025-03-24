@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Basketball.Entity.DTOs.TrainingHours
 {
@@ -10,7 +6,8 @@ namespace Basketball.Entity.DTOs.TrainingHours
     {
         public int Id { get; set; }
         public string? TrainingDate { get; set; }  // Antrenman tarihi
-        public TimeSpan TrainingTime { get; set; }  // Antrenman saati
+        public TimeSpan TrainingStartTime { get; set; }  // Antrenman saati
+        public TimeSpan TrainingFinishTime { get; set; }  // Antrenman saati
         public int CategoryGroupsId { get; set; }  // Kategori grubu ID'si
         public string CategoryGroupName { get; set; } = null!;  // Kategori grubu adı (ör. "U-16")
 

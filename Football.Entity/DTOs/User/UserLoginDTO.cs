@@ -6,6 +6,7 @@ namespace Basketball.Entity.DTOs.User
 {
     public class UserLoginDTO
     {
+       
         [Required]
         public string? Email { get; set; }
 

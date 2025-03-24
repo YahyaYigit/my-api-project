@@ -29,6 +29,9 @@ namespace Basketball.Entity.DTOs.User
         public bool IsAcceptedMotherWhatsappGroup { get; set; }
         public bool IsAcceptedFatherWhatsappGroup { get; set; }
 
+        public bool AcceptedKVKK { get; set; }
+        public bool AcceptedImportant { get; set; }
+
         public DateTime BirthDay { get; set; }
 
         public string Address { get; set; }

@@ -38,6 +38,7 @@ namespace Basketball.WebAPI.Controllers
                 .Select(user => new UserDTO
                 {
                     Id = user.Id,
+                    IsAdmin = user.IsAdmin,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     // CategoryGroups kontrolü
@@ -61,6 +62,8 @@ namespace Basketball.WebAPI.Controllers
                     IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
                     IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
                     IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
+                    AcceptedImportant = user.AcceptedImportant,
+                    AcceptedKVKK = user.AcceptedKVKK,
 
                     // Dues kontrolü
                     MonthlyFees = user.Dues != null
@@ -108,6 +111,7 @@ namespace Basketball.WebAPI.Controllers
                 .Select(user => new UserDTO
                 {
                     Id = user.Id,
+                    IsAdmin = user.IsAdmin,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     CategoryGroupsId = user.CategoryGroups != null ? user.CategoryGroups.Id : 0, // Null kontrolü
@@ -131,7 +135,8 @@ namespace Basketball.WebAPI.Controllers
                     IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
                     IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
                     IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
-
+                    AcceptedImportant = user.AcceptedImportant,
+                    AcceptedKVKK = user.AcceptedKVKK,
 
                     // Dues kontrolü
                     MonthlyFees = user.Dues != null
@@ -164,6 +169,7 @@ namespace Basketball.WebAPI.Controllers
             var userDTO = new UserDTO
             {
                 Id = user.Id,
+                IsAdmin = user.IsAdmin,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
 
@@ -188,7 +194,8 @@ namespace Basketball.WebAPI.Controllers
                 IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
                 IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
                 IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
-
+                AcceptedImportant = user.AcceptedImportant,
+                AcceptedKVKK = user.AcceptedKVKK,
 
                 // Dues kontrolü
                 MonthlyFees = user.Dues != null

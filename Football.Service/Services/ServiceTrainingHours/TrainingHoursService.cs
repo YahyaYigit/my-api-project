@@ -1,14 +1,8 @@
-﻿using Basketball.Entity.DTOs.Dues;
-using Basketball.Entity.DTOs.TrainingHours;
-using Basketball.Entity.DTOs.User;
+﻿using Basketball.Entity.DTOs.TrainingHours;
 using Basketball.Entity.Models;
 using Football.DataAcces.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Basketball.Service.Services.ServiceTrainingHours
 {
@@ -34,7 +28,8 @@ namespace Basketball.Service.Services.ServiceTrainingHours
                 CategoryGroupsId = trainingHoursForInsertion.CategoryGroupsId,
                 CategoryGroup = categoryGroups,
 
-                TrainingTime = trainingHoursForInsertion.TrainingTime,
+                TrainingStartTime = trainingHoursForInsertion.TrainingStartTime,
+                TrainingFinishTime =trainingHoursForInsertion.TrainingFinishTime,
                 TrainingDate = trainingHoursForInsertion.TrainingDate,
 
             };
@@ -115,7 +110,8 @@ namespace Basketball.Service.Services.ServiceTrainingHours
 
             // Diğer alanları güncelle
             existingTrainingHours.TrainingDate = trainingHoursForUpdate.TrainingDate;
-            existingTrainingHours.TrainingTime = trainingHoursForUpdate.TrainingTime;
+            existingTrainingHours.TrainingStartTime = trainingHoursForUpdate.TrainingStartTime;
+            existingTrainingHours.TrainingFinishTime = trainingHoursForUpdate.TrainingFinishTime;
             existingTrainingHours.IsDeleted = trainingHoursForUpdate.IsDeleted;
 
             _context.SaveChanges(); // Değişiklikleri kaydet

@@ -41,7 +41,6 @@ namespace Basketball.WebAPI.Controllers
 
 
 
-        // Login işlemi için POST metodu
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO userLoginDTO)
         {
@@ -51,16 +50,17 @@ namespace Basketball.WebAPI.Controllers
             }
 
             // Giriş işlemini AuthenticationService üzerinden gerçekleştir
-            var result = await _authenticationService.LoginUser(userLoginDTO);
+            var userDto = await _authenticationService.LoginUser(userLoginDTO);
 
-            // Eğer giriş başarılıysa, başarılı mesajı döndürülür
-            if (result.Succeeded)
+            // Kullanıcı bulunamadıysa veya şifre hatalıysa exception fırlatılmıştır
+            if (userDto == null)
             {
-                return Ok("Giriş başarılı.");
+                return Unauthorized("Kullanıcı bulunamadı veya şifre hatalı.");
             }
 
-            // Eğer giriş başarısızsa, hata mesajları döndürülür
-            return Unauthorized(result.Errors.Select(e => e.Description));
+            // Eğer kullanıcı başarıyla giriş yaptıysa, UserDTO'yu döndürüyoruz
+            return Ok(new { message = "Giriş başarılı", user = userDto });
         }
+
     }
 }

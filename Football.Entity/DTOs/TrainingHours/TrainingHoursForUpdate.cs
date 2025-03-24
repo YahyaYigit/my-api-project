@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Basketball.Entity.DTOs.TrainingHours
 {
@@ -10,7 +6,8 @@ namespace Basketball.Entity.DTOs.TrainingHours
     {
         public int Id { get; set; }
         public string? TrainingDate { get; set; } // Güncelleme için tarih
-        public TimeSpan TrainingTime { get; set; } // Güncelleme için saat
+        public TimeSpan TrainingStartTime { get; set; }  // Antrenman saati
+        public TimeSpan TrainingFinishTime { get; set; }  // Antrenman saati
 
         public int CategoryGroupsId { get; set; }  // Kategori grubu ID'si
 

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Basketball.Entity.Models
 {
@@ -11,7 +7,8 @@ namespace Basketball.Entity.Models
     {
         public int Id { get; set; }
         public string? TrainingDate { get; set; }  // Antrenman tarihi
-        public TimeSpan TrainingTime { get; set; }  // Antrenman saati
+        public TimeSpan TrainingStartTime { get; set; }  // Antrenman saati
+        public TimeSpan TrainingFinishTime { get; set; }  // Antrenman saati
 
         // Kategori grubunun ID'sini tutar
         [ForeignKey("CategoryGroup")]

@@ -1,4 +1,5 @@
-﻿using Basketball.Entity.DTOs.User;
+﻿using Basketball.Entity.DTOs.LoginDTO;
+using Basketball.Entity.DTOs.User;
 using Basketball.Entity.Models;
 using Football.DataAcces.Data;
 using Microsoft.AspNetCore.Identity;
@@ -47,6 +48,8 @@ namespace Basketball.Service.Services.ServiceAuthentication
                 IsAcceptedWhatsappGroup = userRegisterDTO.IsAcceptedWhatsappGroup,
                 IsAcceptedFatherWhatsappGroup = userRegisterDTO.IsAcceptedFatherWhatsappGroup,
                 IsAcceptedMotherWhatsappGroup = userRegisterDTO.IsAcceptedMotherWhatsappGroup,
+                AcceptedKVKK = userRegisterDTO.AcceptedKVKK,
+                AcceptedImportant =userRegisterDTO.AcceptedImportant,
                 NormalizedEmail = normalizedEmail,
                 NormalizedUserName = normalizedUserName
             };
@@ -104,7 +107,9 @@ namespace Basketball.Service.Services.ServiceAuthentication
                 TcNo = user.TcNo,
                 IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
                 IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
-                IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup
+                IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
+                AcceptedKVKK = user.AcceptedKVKK,
+                AcceptedImportant = user.AcceptedImportant
             };
 
             return userDTO; // Kullanıcı başarıyla kaydedildi, UserDTO döndürülüyor
@@ -117,7 +122,7 @@ namespace Basketball.Service.Services.ServiceAuthentication
 
 
 
-        public async Task<IdentityResult> LoginUser(UserLoginDTO userLoginDTO)
+        public async Task<LoginDTO> LoginUser(UserLoginDTO userLoginDTO)
         {
             // E-postayı iki farklı şekilde normalize et
             var normalizedEmail = _userManager.NormalizeEmail(userLoginDTO.Email!);
@@ -139,30 +144,46 @@ namespace Basketball.Service.Services.ServiceAuthentication
             // Kullanıcı yine de bulunamazsa
             if (user == null)
             {
-                return IdentityResult.Failed(new IdentityError { Description = "Kullanıcı bulunamadı." });
+                // Kullanıcı bulunamadığında failed bir sonuç dönülecek
+                throw new Exception("Kullanıcı bulunamadı.");
             }
 
             // Şifreyi doğrula
             var passwordCheck = await _userManager.CheckPasswordAsync(user, userLoginDTO.Password!);
             if (!passwordCheck)
             {
-                return IdentityResult.Failed(new IdentityError { Description = "Şifre hatalı." });
+                // Şifre hatalı olduğunda failed bir sonuç dönülecek
+                throw new Exception("Şifre hatalı.");
             }
 
             // Kullanıcının rollerini al
             var roles = await _userManager.GetRolesAsync(user);
 
+            // Rol kontrolü
             if (roles.Contains("Admin"))
             {
-                return IdentityResult.Success; // Admin girişi başarılı
+                // Admin girişi başarılı olduğunda, UserDTO döndürüyoruz
+                return new LoginDTO
+                {
+                    
+                    IsAdmin = true // Admin
+                };
             }
             else if (roles.Contains("User"))
             {
-                return IdentityResult.Success; // Normal kullanıcı girişi başarılı
+                // Normal kullanıcı girişi başarılı olduğunda, UserDTO döndürüyoruz
+                return new LoginDTO
+                {
+                 
+                    IsAdmin = false // Normal kullanıcı
+                };
             }
 
-            return IdentityResult.Failed(new IdentityError { Description = "Geçersiz rol." });
+            // Eğer geçersiz rol ise
+            throw new Exception("Geçersiz rol.");
         }
+
+
 
 
 

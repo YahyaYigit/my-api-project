@@ -1,11 +1,11 @@
-﻿
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Basketball.Entity.DTOs.User
 {
     public class UserDTO
     {
         public int Id { get; set; }
+        public bool IsAdmin { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? CategoryGroups { get; set; }
@@ -33,6 +33,9 @@ namespace Basketball.Entity.DTOs.User
         public bool IsAcceptedWhatsappGroup { get; set; }
         public bool IsAcceptedMotherWhatsappGroup { get; set; }
         public bool IsAcceptedFatherWhatsappGroup { get; set; }
+
+        public bool AcceptedKVKK { get; set; }
+        public bool AcceptedImportant { get; set; }
 
         // Kullanıcının ödeme bilgilerini ay ve yıl bazında tutacak sözlük
         public Dictionary<string, string> MonthlyFees { get; set; } = new Dictionary<string, string>();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Basketball.Entity.DTOs.Dues
 {
     public class DuesDTO
@@ -18,5 +13,8 @@ namespace Basketball.Entity.DTOs.Dues
         // İlişkili User nesnelerinin FirstName ve LastName özellikleri
         public List<string> FirstNames { get; set; } = new List<string>();
         public List<string> LastNames { get; set; } = new List<string>();
+
+      
+
     }
 }

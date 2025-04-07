@@ -2,11 +2,7 @@
 using Basketball.Entity.Models;
 using Football.DataAcces.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Basketball.Service.Services.ServiceDues
 {
@@ -53,28 +49,30 @@ namespace Basketball.Service.Services.ServiceDues
 
         public IEnumerable<Dues> GetAllDues()
         {
-            var Dues = _context.Dues
-              .Include(r => r.Users) // İlişkili kullanıcıları dahil et
-              .Where(c => !c.IsDeleted) // Silinmemiş kategorileri filtrele
-              .ToList();
+            var dues = _context.Dues
+                .Include(d => d.Users) // Kullanıcıları dahil et
+                .ThenInclude(u => u.CategoryGroups) // Kullanıcıların CategoryGroup ilişkisini dahil et
+                .Where(d => !d.IsDeleted) // Silinmemiş kategorileri filtrele
+                .ToList();
 
-            return Dues;
+            return dues;
         }
 
         public Dues GetDuesById(int id)
         {
+            var dues = _context.Dues
+                .Include(d => d.Users) // Kullanıcıları dahil et
+                .ThenInclude(u => u.CategoryGroups) // Kullanıcıların CategoryGroup ilişkisini dahil et
+                .FirstOrDefault(d => d.Id == id && !d.IsDeleted); // Silinmemiş kategori bul
 
-            var Dues = _context.Dues
-                .Include(r => r.Users) // İlişkili kullanıcıları dahil et
-                .FirstOrDefault(c => c.Id == id && !c.IsDeleted); // Silinmemiş kategori bul
-
-            if (Dues == null)
+            if (dues == null)
             {
                 throw new Exception("Aidat bulunamadı");
             }
 
-            return Dues;
+            return dues;
         }
+
 
         public Dues UpdateDues(DuesForUpdate duesForUpdate)
         {

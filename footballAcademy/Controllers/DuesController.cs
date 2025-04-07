@@ -50,7 +50,9 @@ namespace Basketball.WebAPI.Controllers
                {
                    user.Id,
                    user.FirstName,
-                   user.LastName
+                   user.LastName,
+                   CategoryGroup = user.CategoryGroups?.Age, // Kullanıcının ait olduğu kategori grubu ismi
+                   CategoryGroupId = user.CategoryGroups?.Id // Kullanıcının ait olduğu kategori grubu ismi
 
                }).ToList()
            }).ToList();
@@ -90,7 +92,9 @@ namespace Basketball.WebAPI.Controllers
                 {
                     user.Id,
                     user.FirstName,
-                    user.LastName
+                    user.LastName,
+                    CategoryGroup = user.CategoryGroups?.Age, // Kullanıcının ait olduğu kategori grubu ismi
+                     CategoryGroupId = user.CategoryGroups?.Id // Kullanıcının ait olduğu kategori grubu ismi
                 }).ToList() // Kullanıcıların sadece Id ve Username bilgisi
             };
 

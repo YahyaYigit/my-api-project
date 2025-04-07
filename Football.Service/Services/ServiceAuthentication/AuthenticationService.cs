@@ -141,6 +141,11 @@ namespace Basketball.Service.Services.ServiceAuthentication
                 }
             }
 
+            if (user!.IsDeleted)
+            {
+                return null!; // Kullanıcı silinmiş
+            }
+
             // Kullanıcı yine de bulunamazsa
             if (user == null)
             {

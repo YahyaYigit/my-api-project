@@ -26,7 +26,7 @@ namespace Football.DataAcces.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer("Data Source=DL-MAKTAS1;Initial Catalog=Academy;Integrated Security=True;Encrypt=True;Trust Server Certificate=True")
+                .UseSqlServer("Data Source=DL-YAHYADOGRU;Initial Catalog=Academy;Integrated Security=True;Encrypt=True;Trust Server Certificate=True")
                 .EnableSensitiveDataLogging();
         }
 

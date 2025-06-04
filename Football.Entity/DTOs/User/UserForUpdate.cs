@@ -1,16 +1,13 @@
-﻿
-namespace Basketball.Entity.DTOs.User
+﻿namespace Basketball.Entity.DTOs.User
 {
     public class UserForUpdate
     {
         public int Id { get; set; }
-       
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
         public int CategoryGroupsId { get; set; }
 
-        public int DuesId { get; set; }
 
         public DateTime BirtDay { get; set; }
         public string? TcNo { get; set; }

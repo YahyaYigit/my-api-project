@@ -1,25 +1,20 @@
-﻿
-
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Basketball.Entity.Models
 {
     public class User : IdentityUser<int>
-    { 
+    {
+        // CategoryGroups ile ilişki
         [ForeignKey("CategoryGroups")]
-        public int? CategoryGroupsId { get; set; } // Nullable olmalı!
-        [InverseProperty("Users")]
-        public CategoryGroups? CategoryGroups { get; set; }
+        public int? CategoryGroupsId { get; set; }  // Nullable olmalı
+        public CategoryGroups? CategoryGroups { get; set; }  // CategoryGroups ile ilişki
 
-        [ForeignKey("Dues")]
-        public int? DuesId { get; set; } // Nullable olmalı!
-        [InverseProperty("Users")]
-        public Dues? Dues { get; set; }
+        // Kullanıcı birden fazla Dues kaydına sahip olabilir, bu nedenle ICollection kullanılıyor
+        public ICollection<Dues> Dues { get; set; } = new List<Dues>();
 
         // Her bir kullanıcı, birden fazla Attendance kaydına sahip olabilir.
         public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
-
 
         public bool IsAdmin { get; set; }
         public string? FirstName { get; set; }
@@ -44,9 +39,6 @@ namespace Basketball.Entity.Models
         public bool AcceptedKVKK { get; set; }
         public bool AcceptedImportant { get; set; }
 
-        
-
         public bool IsDeleted { get; set; }
     }
-
 }

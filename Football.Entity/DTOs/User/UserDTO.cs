@@ -39,6 +39,7 @@ namespace Basketball.Entity.DTOs.User
 
         // Kullanıcının ödeme bilgilerini ay ve yıl bazında tutacak sözlük
         public Dictionary<string, string> MonthlyFees { get; set; } = new Dictionary<string, string>();
+        public bool IsDeleted { get; set; }
     }
 
 }

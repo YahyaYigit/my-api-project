@@ -1,6 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Basketball.Entity.DTOs.User
 {
@@ -8,7 +6,7 @@ namespace Basketball.Entity.DTOs.User
     {
 
         [Required]
-        public string FirstName { get; set; } 
+        public string FirstName { get; set; }
 
         [Required]
         public string LastName { get; set; }

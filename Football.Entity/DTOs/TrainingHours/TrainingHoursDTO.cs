@@ -5,7 +5,8 @@ namespace Basketball.Entity.DTOs.TrainingHours
     public class TrainingHoursDTO
     {
         public int Id { get; set; }
-        public string? TrainingDate { get; set; }  // Antrenman tarihi
+        public string? TrainingDate { get; set; }
+      
         public TimeSpan TrainingStartTime { get; set; }  // Antrenman saati
         public TimeSpan TrainingFinishTime { get; set; }  // Antrenman saati
         public int CategoryGroupsId { get; set; }  // Kategori grubu ID'si

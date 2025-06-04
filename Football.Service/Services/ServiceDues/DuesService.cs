@@ -23,6 +23,7 @@ namespace Basketball.Service.Services.ServiceDues
             }
             var dues = new Dues
             {
+                UserId = duesForInsertion.UserId,
                 Fee = duesForInsertion.Fee,
                 PaymentType = duesForInsertion.PaymentType,
                 Month = duesForInsertion.Month,
@@ -80,6 +81,17 @@ namespace Basketball.Service.Services.ServiceDues
             if (existingDues == null)
             {
                 throw new KeyNotFoundException($"Aidat ID {duesForUpdate.Id} bulunamadı."); // Hata kontrolü
+            }
+
+            // UserId'yi güncelleme kontrolü
+            if (duesForUpdate.UserId != existingDues.UserId)
+            {
+                var user = _context.Users.FirstOrDefault(r => r.Id == duesForUpdate.UserId);
+                if (user == null)
+                {
+                    throw new ArgumentException("Geçersiz UserId.");
+                }
+                existingDues.UserId = duesForUpdate.UserId;
             }
 
             existingDues.Fee = duesForUpdate.Fee;

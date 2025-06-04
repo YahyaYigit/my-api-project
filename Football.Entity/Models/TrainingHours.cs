@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Basketball.Entity.Enums;
 
 
 namespace Basketball.Entity.Models
@@ -6,7 +7,7 @@ namespace Basketball.Entity.Models
     public class TrainingHours
     {
         public int Id { get; set; }
-        public string? TrainingDate { get; set; }  // Antrenman tarihi
+        public TrainingHoursEnums TrainingDate { get; set; }  // Antrenman tarihi
         public TimeSpan TrainingStartTime { get; set; }  // Antrenman saati
         public TimeSpan TrainingFinishTime { get; set; }  // Antrenman saati
 

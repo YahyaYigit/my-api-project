@@ -42,19 +42,11 @@ namespace Basketball.WebAPI.Controllers
            .Select(duesGroups => new
            {
                duesGroups.Id,
-              duesGroups.Fee,
-              duesGroups.PaymentType,
-              duesGroups.Month,
-              duesGroups.Year,
-               Users = duesGroups.Users.Select(user => new
-               {
-                   user.Id,
-                   user.FirstName,
-                   user.LastName,
-                   CategoryGroup = user.CategoryGroups?.Age, // Kullanıcının ait olduğu kategori grubu ismi
-                   CategoryGroupId = user.CategoryGroups?.Id // Kullanıcının ait olduğu kategori grubu ismi
-
-               }).ToList()
+               duesGroups.Fee,
+               duesGroups.PaymentType,
+               duesGroups.Month,
+               duesGroups.Year,
+               duesGroups.UserId,
            }).ToList();
 
 
@@ -67,7 +59,6 @@ namespace Basketball.WebAPI.Controllers
                 Data = paginatedDues
             });
         }
-
 
 
         // GET: api/dues/{id}
@@ -88,14 +79,7 @@ namespace Basketball.WebAPI.Controllers
                 dues.PaymentType,
                 dues.Month,
                 dues.Year,
-                Users = dues.Users.Select(user => new
-                {
-                    user.Id,
-                    user.FirstName,
-                    user.LastName,
-                    CategoryGroup = user.CategoryGroups?.Age, // Kullanıcının ait olduğu kategori grubu ismi
-                     CategoryGroupId = user.CategoryGroups?.Id // Kullanıcının ait olduğu kategori grubu ismi
-                }).ToList() // Kullanıcıların sadece Id ve Username bilgisi
+                dues.UserId
             };
 
             return Ok(result); // Rol bilgisi ve kullanıcı Id ve Username bilgileriyle döndür
@@ -109,7 +93,18 @@ namespace Basketball.WebAPI.Controllers
                 return BadRequest(); // Geçersiz istek
 
             var dues = _duesService.CreateDues(duesForInsertion);
-            return CreatedAtAction(nameof(GetDues), new { id = dues.Id }, dues); // Yeni kategori oluşturulunca 201 döndür
+
+            var duesDTO = new DuesDTO
+            {
+                Id = dues.Id,
+                Fee = dues.Fee,
+                PaymentType = dues.PaymentType,
+                Month = dues.Month,
+                Year = dues.Year,
+                UserId = dues.UserId   // Users üzerinden LastName almak
+            };
+
+            return Ok(duesDTO); // Yeni kategori oluşturulunca 201 döndür
         }
 
         [HttpPut("{id}")]

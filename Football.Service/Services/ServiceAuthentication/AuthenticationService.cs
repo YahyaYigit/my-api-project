@@ -3,6 +3,7 @@ using Basketball.Entity.DTOs.User;
 using Basketball.Entity.Models;
 using Football.DataAcces.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Basketball.Service.Services.ServiceAuthentication
 {
@@ -124,71 +125,77 @@ namespace Basketball.Service.Services.ServiceAuthentication
 
         public async Task<LoginDTO> LoginUser(UserLoginDTO userLoginDTO)
         {
-            // E-postayı iki farklı şekilde normalize et
-            var normalizedEmail = _userManager.NormalizeEmail(userLoginDTO.Email!);
-            var emailUpper = userLoginDTO.Email!.ToUpper();
+            var emailLower = userLoginDTO.Email!.ToLower();
 
-            // İlk olarak NormalizeEmail ile kullanıcıyı bul
-            var user = await _userManager.FindByEmailAsync(normalizedEmail);
+            var user = await _context.Users
+                .Include(u => u.CategoryGroups)
+                .Include(u => u.Dues)
+                .FirstOrDefaultAsync(u => u.Email!.ToLower() == emailLower);
 
-            // Eğer bulunamazsa ToUpper() ile tekrar dene ama GERÇEK EŞLEŞMEYİ kontrol et
             if (user == null)
             {
-                var secondTryUser = await _userManager.FindByEmailAsync(emailUpper);
-                if (secondTryUser != null && secondTryUser.Email!.Equals(userLoginDTO.Email, StringComparison.OrdinalIgnoreCase))
-                {
-                    user = secondTryUser;
-                }
-            }
-
-            if (user!.IsDeleted)
-            {
-                return null!; // Kullanıcı silinmiş
-            }
-
-            // Kullanıcı yine de bulunamazsa
-            if (user == null)
-            {
-                // Kullanıcı bulunamadığında failed bir sonuç dönülecek
                 throw new Exception("Kullanıcı bulunamadı.");
             }
 
-            // Şifreyi doğrula
+            if (user.IsDeleted)
+            {
+                return null!;
+            }
+
             var passwordCheck = await _userManager.CheckPasswordAsync(user, userLoginDTO.Password!);
             if (!passwordCheck)
             {
-                // Şifre hatalı olduğunda failed bir sonuç dönülecek
                 throw new Exception("Şifre hatalı.");
             }
 
-            // Kullanıcının rollerini al
             var roles = await _userManager.GetRolesAsync(user);
 
-            // Rol kontrolü
-            if (roles.Contains("Admin"))
+            var userDTO = new UserDTO
             {
-                // Admin girişi başarılı olduğunda, UserDTO döndürüyoruz
-                return new LoginDTO
-                {
-                    
-                    IsAdmin = true // Admin
-                };
-            }
-            else if (roles.Contains("User"))
-            {
-                // Normal kullanıcı girişi başarılı olduğunda, UserDTO döndürüyoruz
-                return new LoginDTO
-                {
-                 
-                    IsAdmin = false // Normal kullanıcı
-                };
-            }
+                Id = user.Id,
+                IsAdmin = user.IsAdmin,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CategoryGroupsId = user.CategoryGroups?.Id ?? 0,
+                CategoryGroups = user.CategoryGroups?.Age ?? "Bilgi Yok",
+                BirtDay = user.BirtDay,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                MotherName = user.MotherName,
+                MotherPhoneNumber = user.MotherPhoneNumber,
+                FatherName = user.FatherName,
+                FatherPhoneNumber = user.FatherPhoneNumber,
+                Email = user.Email,
+                TcNo = user.TcNo,
+                BirthPlace = user.BirthPlace,
+                School = user.School,
+                Height = user.Height,
+                Weight = user.Weight,
+                HealthProblem = user.HealthProblem,
+                IsAcceptedWhatsappGroup = user.IsAcceptedWhatsappGroup,
+                IsAcceptedMotherWhatsappGroup = user.IsAcceptedMotherWhatsappGroup,
+                IsAcceptedFatherWhatsappGroup = user.IsAcceptedFatherWhatsappGroup,
+                AcceptedKVKK = user.AcceptedKVKK,
+                AcceptedImportant = user.AcceptedImportant,
 
-            // Eğer geçersiz rol ise
-            throw new Exception("Geçersiz rol.");
+                // MonthlyFees sözlüğünü dolduruyoruz
+
+                MonthlyFees = user.Dues != null ? user.Dues.ToDictionary(
+
+                        d => $"{d.Month}-{d.Year}", // Anahtar: Ay-Yıl formatında
+
+                        d => $"{d.PaymentType} - {d.Fee} TL") // Değer: PaymentType ve Fee bilgisi
+
+                        : new Dictionary<string, string>()
+
+            };
+
+            return new LoginDTO
+            {
+                IsAdmin = roles.Contains("Admin"),
+                User = userDTO
+            };
         }
-
-
 
 
 

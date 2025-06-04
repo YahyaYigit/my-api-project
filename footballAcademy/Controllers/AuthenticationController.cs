@@ -50,16 +50,21 @@ namespace Basketball.WebAPI.Controllers
             }
 
             // Giriş işlemini AuthenticationService üzerinden gerçekleştir
-            var userDto = await _authenticationService.LoginUser(userLoginDTO);
+            var loginDto = await _authenticationService.LoginUser(userLoginDTO);
 
             // Kullanıcı bulunamadıysa veya şifre hatalıysa exception fırlatılmıştır
-            if (userDto == null)
+            if (loginDto == null)
             {
                 return Unauthorized("Kullanıcı bulunamadı veya şifre hatalı.");
             }
 
-            // Eğer kullanıcı başarıyla giriş yaptıysa, UserDTO'yu döndürüyoruz
-            return Ok(new { message = "Giriş başarılı", user = userDto });
+            // Başarılı girişte hem admin durumu hem kullanıcı bilgisi birlikte dönülüyor
+            return Ok(new
+            {
+                message = "Giriş başarılı",
+                isAdmin = loginDto.IsAdmin,
+                user = loginDto.User
+            });
         }
 
     }

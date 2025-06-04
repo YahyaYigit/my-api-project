@@ -52,10 +52,11 @@ namespace Basketball.Service.Services.ServiceUser
             var user = _context.Users
                 .Include(u => u.Dues) // CategoryGroups ilişkisini dahil et
                .Include(f => f.CategoryGroups) // Kategoriyi dahil et
-               .FirstOrDefault(f => f.Id == id && !f.IsDeleted);  // Silinmemiş Useri bul
+               .FirstOrDefault(f => f.Id == id );  
 
             if (user == null)
             {
+                
                 throw new Exception("User bulunamadı");
             }
 
@@ -79,7 +80,6 @@ namespace Basketball.Service.Services.ServiceUser
             }
 
             // Güncelleme işlemi
-       
             existingUser.FirstName = userForUpdate.FirstName;
             existingUser.LastName = userForUpdate.LastName;
             existingUser.CategoryGroupsId = userForUpdate.CategoryGroupsId;
@@ -106,8 +106,6 @@ namespace Basketball.Service.Services.ServiceUser
 
 
 
-
-
             // Email ve UserName'ı güncelle
             existingUser.Email = userForUpdate.Email;
             existingUser.UserName = userForUpdate.Email;  // UserName'ı Email olarak güncelledik
@@ -126,7 +124,7 @@ namespace Basketball.Service.Services.ServiceUser
                 existingUser.NormalizedUserName = userForUpdate.Email.ToUpper();
             }
 
-            existingUser.DuesId = userForUpdate.DuesId;
+
             existingUser.IsDeleted = userForUpdate.IsDeleted;
 
             // CategoryGroups güncellemesi
@@ -135,7 +133,6 @@ namespace Basketball.Service.Services.ServiceUser
             {
                 throw new ArgumentException("Geçersiz CategoryGroupsId.");
             }
-
 
 
             // Şifre güncellemesi (eğer yeni şifre sağlanmışsa)
@@ -150,8 +147,6 @@ namespace Basketball.Service.Services.ServiceUser
 
             return existingUser;
         }
-
-
 
 
 

@@ -1,11 +1,13 @@
 ﻿
 
+using Basketball.Entity.Enums;
+
 namespace Basketball.Entity.DTOs.TrainingHours
 {
     public class TrainingHoursForUpdate
     {
         public int Id { get; set; }
-        public string? TrainingDate { get; set; } // Güncelleme için tarih
+        public TrainingHoursEnums TrainingDate { get; set; }
         public TimeSpan TrainingStartTime { get; set; }  // Antrenman saati
         public TimeSpan TrainingFinishTime { get; set; }  // Antrenman saati
 

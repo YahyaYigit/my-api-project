@@ -90,10 +90,15 @@ namespace Basketball.DataAcces.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Dues");
                 });
@@ -145,8 +150,8 @@ namespace Basketball.DataAcces.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("TrainingDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TrainingDate")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("TrainingFinishTime")
                         .HasColumnType("time");
@@ -193,9 +198,6 @@ namespace Basketball.DataAcces.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DuesId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -288,8 +290,6 @@ namespace Basketball.DataAcces.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryGroupsId");
-
-                    b.HasIndex("DuesId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -416,6 +416,17 @@ namespace Basketball.DataAcces.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("Basketball.Entity.Models.Dues", b =>
+                {
+                    b.HasOne("Basketball.Entity.Models.User", "Users")
+                        .WithMany("Dues")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Basketball.Entity.Models.TrainingHours", b =>
                 {
                     b.HasOne("Basketball.Entity.Models.CategoryGroups", "CategoryGroup")
@@ -433,13 +444,7 @@ namespace Basketball.DataAcces.Migrations
                         .WithMany("Users")
                         .HasForeignKey("CategoryGroupsId");
 
-                    b.HasOne("Basketball.Entity.Models.Dues", "Dues")
-                        .WithMany("Users")
-                        .HasForeignKey("DuesId");
-
                     b.Navigation("CategoryGroups");
-
-                    b.Navigation("Dues");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -500,14 +505,11 @@ namespace Basketball.DataAcces.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Basketball.Entity.Models.Dues", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("Basketball.Entity.Models.User", b =>
                 {
                     b.Navigation("Attendances");
+
+                    b.Navigation("Dues");
                 });
 #pragma warning restore 612, 618
         }

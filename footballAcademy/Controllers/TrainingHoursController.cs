@@ -44,7 +44,7 @@ namespace Basketball.WebAPI.Controllers
 
 
                   Id = training.Id,
-                  TrainingDate = training.TrainingDate,
+                  TrainingDate = training.TrainingDate.ToString(),
                   TrainingStartTime = training.TrainingStartTime,
                   TrainingFinishTime = training.TrainingFinishTime,
                   CategoryGroupsId = training.CategoryGroupsId,
@@ -80,7 +80,7 @@ namespace Basketball.WebAPI.Controllers
             var trainingHoursDTO = new TrainingHoursDTO
             {
                 Id = trainingHours.Id,
-                TrainingDate = trainingHours.TrainingDate,
+                TrainingDate = trainingHours.TrainingDate.ToString(),
                 TrainingStartTime = trainingHours.TrainingStartTime,
                 TrainingFinishTime = trainingHours.TrainingFinishTime,
                 CategoryGroupsId = trainingHours.CategoryGroupsId,
@@ -107,7 +107,7 @@ namespace Basketball.WebAPI.Controllers
             var trainingHoursDto = new TrainingHoursDTO
             {
                 Id = trainingHours.Id,
-                TrainingDate = trainingHours.TrainingDate,
+                TrainingDate = trainingHours.TrainingDate.ToString(),
                 TrainingStartTime = trainingHours.TrainingStartTime,
                 TrainingFinishTime = trainingHours.TrainingFinishTime,
                 CategoryGroupsId = trainingHours.CategoryGroupsId,
